@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import peaksoft.hibernatejpa.model.Student;
+import peaksoft.hibernatejpa.model.entity.Student;
 import peaksoft.hibernatejpa.services.StudentService;
 
 import java.util.List;

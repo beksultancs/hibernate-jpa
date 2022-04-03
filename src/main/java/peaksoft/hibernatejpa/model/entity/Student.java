@@ -1,17 +1,17 @@
-package peaksoft.hibernatejpa.model;
+package peaksoft.hibernatejpa.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.tomcat.jni.Local;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 import peaksoft.hibernatejpa.model.converters.YesOrNoBooleanConverter;
+import peaksoft.hibernatejpa.model.embeddedclasses.Address;
+import peaksoft.hibernatejpa.model.enums.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Beksultan
@@ -19,6 +19,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 public class Student {
 
     @Id
@@ -37,14 +38,13 @@ public class Student {
 
     private String lastName;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate birthDay; // yyyy-MM-dd - 2022-04-03
+    private LocalDate birthDay;
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
     @Convert(converter = YesOrNoBooleanConverter.class)
-    private Boolean wantsNewsLetters;
+    private boolean wantsNewsLetters;
 
     @Transient
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
@@ -57,6 +57,9 @@ public class Student {
             @AttributeOverride(name = "number", column = @Column(name = "st_address_number"))
     })
     private Address address;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Course course;
 
     public int getAge() {
         return LocalDate.now().minusYears(birthDay.getYear()).getYear();
