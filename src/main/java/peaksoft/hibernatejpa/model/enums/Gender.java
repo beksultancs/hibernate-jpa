@@ -1,4 +1,4 @@
-package peaksoft.hibernatejpa.model;
+package peaksoft.hibernatejpa.model.enums;
 
 /**
  * @author Beksultan
